@@ -52,7 +52,7 @@ function readYaml(fp, options, cb) {
     var data;
 
     try {
-      data = YAML.safeLoad(buf.toString(), options);
+      data = YAML.safeLoad(buf, options);
     } catch (e) {
       cb(e);
       return;
