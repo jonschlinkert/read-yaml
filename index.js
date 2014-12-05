@@ -11,15 +11,19 @@ var YAML = require('js-yaml');
 var xtend = require('xtend');
 
 /**
- * ## async
- *
+ * Expose `read`
+ */
+
+module.exports = readYaml;
+
+/**
  * Read YAML file asynchronously and parse content as JSON
  *
  * **Example:**
  *
  * ```js
- * var yaml = require('read-yaml');
- * yaml('config.yml', function(err, data) {
+ * var readYaml = require('read-yaml');
+ * readYaml('config.yml', function(err, data) {
  *   if (err) throw err;
  *   console.log(data);
  * });
@@ -28,9 +32,10 @@ var xtend = require('xtend');
  * @param   {String} `filepath`
  * @param   {Object|String} `options`
  * @param   {Function} `callback`
+ * @api public
  */
 
-module.exports = function (filepath, options, callback) {
+function readYaml(filepath, options, callback) {
   if (callback === undefined) {
     callback = options;
     options = {};
@@ -44,7 +49,7 @@ module.exports = function (filepath, options, callback) {
 
     options = createYamlOptions(options, filepath);
     var data;
-    
+
     try {
       data = YAML.safeLoad(buf.toString(), options);
     } catch (e) {
@@ -54,29 +59,34 @@ module.exports = function (filepath, options, callback) {
 
     callback(null, data);
   });
-};
+}
 
 /**
- * ## sync
- *
  * Read YAML file synchronously and parse content as JSON
  *
  * **Example:**
  *
  * ```js
- * var yaml = require('read-yaml').sync;
- * var config = yaml('config.yml');
+ * var read = require('read-yaml');
+ * var config = read.sync('config.yml');
  * ```
  *
  * @param   {String} `filepath`
  * @return  {Object}
+ * @api public
  */
 
-module.exports.sync = function (filepath, options) {
+readYaml.sync = function readYamlSync(filepath, options) {
   var str = fs.readFileSync(filepath, options);
   options = createYamlOptions(options, filepath);
   return YAML.safeLoad(str, options);
 };
+
+/**
+ * Util to normalize options for js-yaml
+ *
+ * @api private
+ */
 
 function createYamlOptions (options, filepath) {
   if (typeof options === 'string') {
