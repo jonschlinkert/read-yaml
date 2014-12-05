@@ -9,7 +9,6 @@
 
 var assert = require('assert');
 var should = require('should');
-var path = require('path');
 var YAML = require('js-yaml');
 var readYaml = require('..');
 

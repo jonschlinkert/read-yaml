@@ -29,35 +29,36 @@ module.exports = readYaml;
  * });
  * ```
  *
- * @param   {String} `filepath`
- * @param   {Object|String} `options`
- * @param   {Function} `callback`
+ * @param {String} `fp` Path of the file to read.
+ * @param {Object|String} `options` to pass to [js-yaml]
+ * @param {Function} `cb` Callback function
+ * @return {Object} JSON
  * @api public
  */
 
-function readYaml(filepath, options, callback) {
-  if (callback === undefined) {
-    callback = options;
+function readYaml(fp, options, cb) {
+  if (cb === undefined) {
+    cb = options;
     options = {};
   }
 
-  fs.readFile(filepath, options, function (err, buf) {
+  fs.readFile(fp, options, function (err, buf) {
     if (err) {
-      callback(err);
+      cb(err);
       return;
     }
 
-    options = createYamlOptions(options, filepath);
+    options = createYamlOptions(options, fp);
     var data;
 
     try {
       data = YAML.safeLoad(buf.toString(), options);
     } catch (e) {
-      callback(e);
+      cb(e);
       return;
     }
 
-    callback(null, data);
+    cb(null, data);
   });
 }
 
@@ -71,14 +72,15 @@ function readYaml(filepath, options, callback) {
  * var config = read.sync('config.yml');
  * ```
  *
- * @param   {String} `filepath`
- * @return  {Object}
+ * @param {String} `fp` Path of the file to read.
+ * @param {Object|String} `options` to pass to [js-yaml]
+ * @return {Object} JSON
  * @api public
  */
 
-readYaml.sync = function readYamlSync(filepath, options) {
-  var str = fs.readFileSync(filepath, options);
-  options = createYamlOptions(options, filepath);
+readYaml.sync = function readYamlSync(fp, options) {
+  var str = fs.readFileSync(fp, options);
+  options = createYamlOptions(options, fp);
   return YAML.safeLoad(str, options);
 };
 
@@ -88,9 +90,9 @@ readYaml.sync = function readYamlSync(filepath, options) {
  * @api private
  */
 
-function createYamlOptions (options, filepath) {
+function createYamlOptions (options, fp) {
   if (typeof options === 'string') {
-    return {filename: filepath};
+    return {filename: fp};
   }
-  return xtend(options, {filename: filepath});
+  return xtend(options, {filename: fp});
 }
