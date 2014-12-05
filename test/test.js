@@ -29,7 +29,7 @@ describe('readYaml', function () {
     });
   });
   it('should fail when it cannot parse the file as YAML.', function (done) {
-    readYaml('index.js', {schema: YAML.FAILSAFE_SCHEMA}, function (err) {
+    readYaml('index.js', function (err) {
       err.should.be.an.instanceof(YAML.YAMLException);
       err.should.have.property('message');
       err.message.should.containEql('index.js');
