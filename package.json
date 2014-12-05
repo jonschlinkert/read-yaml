@@ -24,7 +24,9 @@
     "yaml",
     "data",
     "parse",
-    "read"
+    "read",
+    "async",
+    "sync"
   ],
   "main": "index.js",
   "engines": {
@@ -33,14 +35,14 @@
   "scripts": {
     "test": "mocha -R spec"
   },
-  "devDependencies": {
-    "chai": "~1.9.1",
-    "mocha": "*",
-    "verb": "~0.2.6",
-    "verb-tag-jscomments": "^0.1.2"
-  },
   "dependencies": {
-    "async": "^0.9.0",
-    "js-yaml": "^3.0.2"
+    "js-yaml": "^3.2.3",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "*",
+    "verb": "^0.3.8",
+    "verb-tag-jscomments": "^0.2.2"
   }
 }

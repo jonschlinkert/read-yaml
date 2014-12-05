@@ -8,8 +8,7 @@
 
 var fs = require('fs');
 var YAML = require('js-yaml');
-var async = require('async');
-
+var xtend = require('xtend');
 
 /**
  * ## async
@@ -20,27 +19,42 @@ var async = require('async');
  *
  * ```js
  * var yaml = require('read-yaml');
- * var config = yaml('config.yml');
+ * yaml('config.yml', function(err, data) {
+ *   if (err) throw err;
+ *   console.log(data);
+ * });
  * ```
  *
  * @param   {String} `filepath`
- * @return  {Object}
+ * @param   {Object|String} `options`
+ * @param   {Function} `callback`
  */
 
-module.exports = function (filepath, callback) {
-  async.waterfall([
-    function (next) { fs.readFile(String(filepath), 'utf8', next); },
-    function (contents, next) {
-      try {
-        next(null, YAML.load(contents));
-      } catch (err) {
-        err.message = 'Failed to parse "' + filepath + '": ' + err.message;
-        next(err);
-      }
-    }
-  ], callback);
-};
+module.exports = function (filepath, options, callback) {
+  if (callback === undefined) {
+    callback = options;
+    options = {};
+  }
 
+  fs.readFile(filepath, options, function (err, buf) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    options = createYamlOptions(options, filepath);
+    var data;
+    
+    try {
+      data = YAML.safeLoad(buf.toString(), options);
+    } catch (e) {
+      callback(e);
+      return;
+    }
+
+    callback(null, data);
+  });
+};
 
 /**
  * ## sync
@@ -58,13 +72,15 @@ module.exports = function (filepath, callback) {
  * @return  {Object}
  */
 
-module.exports.sync = function (filepath) {
-  var str = fs.readFileSync(String(filepath), 'utf8');
-  try {
-    return YAML.load(str);
-  } catch (err) {
-    err.message = 'Failed to parse "' + filepath + '": ' + err.message;
-    throw err;
-  }
+module.exports.sync = function (filepath, options) {
+  var str = fs.readFileSync(filepath, options);
+  options = createYamlOptions(options, filepath);
+  return YAML.safeLoad(str, options);
 };
 
+function createYamlOptions (options, filepath) {
+  if (typeof options === 'string') {
+    return {filename: filepath};
+  }
+  return xtend(options, {filename: filepath});
+}
