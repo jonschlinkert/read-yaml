@@ -1,4 +1,4 @@
-# read-yaml [![NPM version](https://badge.fury.io/js/read-yaml.svg)](http://badge.fury.io/js/read-yaml)
+# read-yaml [![NPM version](https://badge.fury.io/js/read-yaml.svg)](http://badge.fury.io/js/read-yaml)  [![Build Status](https://travis-ci.org/jonschlinkert/read-yaml.svg)](https://travis-ci.org/jonschlinkert/read-yaml) 
 
 > Very thin wrapper around js-yaml for directly reading in YAML files.
 
