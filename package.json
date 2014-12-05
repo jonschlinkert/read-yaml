@@ -36,7 +36,6 @@
     "xtend": "^4.0.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
     "mocha": "*",
     "should": "^4.3.0"
   },
