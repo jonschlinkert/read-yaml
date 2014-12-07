@@ -1,7 +1,7 @@
 {
   "name": "read-yaml",
   "description": "Very thin wrapper around js-yaml for directly reading in YAML files.",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/jonschlinkert/read-yaml",
   "author": {
     "name": "Jon Schlinkert",
