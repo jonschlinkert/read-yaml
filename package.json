@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "^4.3.0"
+    "should": "^5.0.0"
   },
   "keywords": [
     "async",
