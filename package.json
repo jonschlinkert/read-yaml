@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "js-yaml": "^3.2.3",
+    "tryit": "^1.0.1",
     "xtend": "^4.0.0"
   },
   "devDependencies": {

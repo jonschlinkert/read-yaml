@@ -7,6 +7,7 @@
 'use strict';
 
 var fs = require('fs');
+var tryit = require('tryit');
 var YAML = require('js-yaml');
 var xtend = require('xtend');
 
@@ -51,14 +52,15 @@ function readYaml(fp, options, cb) {
     options = createYamlOptions(options, fp);
     var data;
 
-    try {
+    tryit(function() {
       data = YAML.safeLoad(buf, options);
-    } catch (e) {
-      cb(e);
-      return;
-    }
-
-    cb(null, data);
+    }, function(err) {
+      if (err) {
+        cb(err);
+        return;
+      }
+      cb(null, data);
+    });
   });
 }
 
