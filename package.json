@@ -25,14 +25,13 @@
     "url": "https://github.com/jonschlinkert/read-yaml/blob/master/LICENSE-MIT"
   },
   "files": [
-    "index.js",
-    "LICENSE-MIT"
+    "index.js"
   ],
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha"
   },
   "dependencies": {
     "js-yaml": "^3.2.3",
