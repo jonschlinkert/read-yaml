@@ -1,8 +1,8 @@
 /*!
- * read-yaml <https://github.com/assemble/read-yaml>
+ * read-yaml <https://github.com/jonschlinkert/read-yaml>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
- * Licensed under the MIT license.
+ * Copyright (c) 2014, 2017, Jon Schlinkert.
+ * Released under the MIT License.
  */
 'use strict';
 

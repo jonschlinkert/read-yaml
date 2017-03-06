@@ -2,21 +2,24 @@
   "name": "read-yaml",
   "description": "Very thin wrapper around js-yaml for directly reading in YAML files.",
   "version": "1.0.0",
-  "author": {
-    "name": "Jon Schlinkert",
-    "url": "https://github.com/jonschlinkert"
-  },
+  "homepage": "https://github.com/jonschlinkert/read-yaml",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "maintainers": [
-    {
-      "name": "Shinnosuke Watanabe",
-      "url": "https://github.com/shinnn"
-    }
+    "Shinnosuke Watanabe (https://github.com/shinnn)"
+  ],
+  "contributors": [
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Shinnosuke Watanabe <snnskwtnb@gmail.com> (https://shinnn.github.io)"
   ],
   "repository": "jonschlinkert/read-yaml",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/read-yaml/issues"
+  },
   "license": "MIT",
   "files": [
     "index.js"
   ],
+  "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -24,13 +27,12 @@
     "test": "mocha"
   },
   "dependencies": {
-    "js-yaml": "^3.3.1",
-    "tryit": "^1.0.1",
-    "xtend": "^4.0.0"
+    "extend-shallow": "^2.0.1",
+    "js-yaml": "^3.8.2"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "^7.0.2"
+    "mocha": "^3.2.0",
+    "should": "^11.2.0"
   },
   "keywords": [
     "async",
@@ -42,5 +44,25 @@
     "sync",
     "yaml",
     "yml"
-  ]
+  ],
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "copy",
+        "read-data",
+        "write"
+      ]
+    },
+    "lint": {
+      "reflinks": true
+    }
+  }
 }
