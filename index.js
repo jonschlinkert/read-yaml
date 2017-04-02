@@ -7,20 +7,11 @@
 'use strict';
 
 var fs = require('fs');
-var tryit = require('tryit');
-var YAML = require('js-yaml');
-var xtend = require('xtend');
+var yaml = require('js-yaml');
+var extend = require('extend-shallow');
 
 /**
- * Expose `read`
- */
-
-module.exports = readYaml;
-
-/**
- * Read YAML file asynchronously and parse content as JSON
- *
- * **Example:**
+ * Read yaml file asynchronously and parse content as JSON.
  *
  * ```js
  * var readYaml = require('read-yaml');
@@ -29,72 +20,60 @@ module.exports = readYaml;
  *   console.log(data);
  * });
  * ```
- *
- * @param {String} `fp` Path of the file to read.
- * @param {Object|String} `options` to pass to [js-yaml]
- * @param {Function} `cb` Callback function
- * @return {Object} JSON
+ * @param {String} `filepath` Path of the file to read.
+ * @param {Object|String} `options` to pass to [js-yaml][]
+ * @param {Function} `cb` Callback function `
  * @api public
  */
 
-function readYaml(fp, options, cb) {
-  if (cb === undefined) {
+function readYaml(filepath, options, cb) {
+  if (typeof options === 'function') {
     cb = options;
     options = {};
   }
 
-  fs.readFile(fp, options, function (err, buf) {
+  var opts = extend({}, options, {filename: filepath});
+
+  fs.readFile(filepath, options, function(err, buf) {
     if (err) {
       cb(err);
       return;
     }
 
-    options = createYamlOptions(options, fp);
     var data;
 
-    tryit(function() {
-      data = YAML.safeLoad(buf, options);
-    }, function(err) {
-      if (err) {
-        cb(err);
-        return;
-      }
-      cb(null, data);
-    });
+    try {
+      data = yaml.safeLoad(buf, opts);
+    } catch (err) {
+      cb(err);
+      return;
+    }
+
+    cb(null, data);
   });
 }
 
 /**
- * Read YAML file synchronously and parse content as JSON
- *
- * **Example:**
+ * Read yaml file synchronously and parse content as JSON.
  *
  * ```js
  * var read = require('read-yaml');
  * var config = read.sync('config.yml');
  * ```
- *
- * @param {String} `fp` Path of the file to read.
- * @param {Object|String} `options` to pass to [js-yaml]
+ * @param {String} `filepath` Path of the file to read.
+ * @param {Object|String} `options` to pass to [js-yaml][].
  * @return {Object} JSON
  * @api public
  */
 
-readYaml.sync = function readYamlSync(fp, options) {
-  var str = fs.readFileSync(fp, options);
-  options = createYamlOptions(options, fp);
-  return YAML.safeLoad(str, options);
+readYaml.sync = function readYamlSync(filepath, options) {
+  var str = fs.readFileSync(filepath, options);
+  var opts = extend({}, options, {filename: filepath});
+  return yaml.safeLoad(str, opts);
 };
 
 /**
- * Util to normalize options for js-yaml
- *
- * @api private
+ * Expose `readYaml`
  */
 
-function createYamlOptions (options, fp) {
-  if (typeof options === 'string') {
-    return {filename: fp};
-  }
-  return xtend(options, {filename: fp});
-}
+module.exports = readYaml;
